@@ -1,0 +1,31 @@
+<h3 mat-dialog-title>Trimitere email</h3>
+<hr class="hr" />
+<div mat-dialog-content style=" overflow-y: hidden;">
+    <div class="row">
+        <form class="center" style="margin-left: 40px;" [formGroup]="form">
+            <div class="form-col">
+                <div class="form-group">
+                    <label for="text-input-2" style="color: black;">To:</label>
+                    <input type="text" class="form-control" id="text-input-2" formControlName="sendToText">
+                </div>
+                <div class="form-group" style="margin-top: -10px;">
+                    <label for="text-input-3" style="color: black;">Cc:</label>
+                    <input type="text" class="form-control" id="text-input-3" formControlName="ccMailText">
+                    <span style="color: gray; font-size: 11px;">Adresele de email se vor aduga cu ; intrele ele.</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <ejs-richtexteditor id="iframeRTE" [toolbarSettings]="tools" [iframeSettings]="iframe" [height]="height"
+                    [width]="width" formControlName="richText">
+
+                </ejs-richtexteditor>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-md btn-discreet-primary cancel"
+                    (click)="onCancel()">Cancel</button>
+                <button type="button" class="btn btn-md btn-discreet-primary submit" style="margin-left: 290px;"
+                    (click)="onSubmit()">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

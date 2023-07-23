@@ -1,0 +1,117 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-5" style="margin-left: 300px; margin-top: -50px;">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Release nou</h4>
+            <p class="card-category">Creare nou release</p>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="form">
+              <div class="form-col">
+                <div class="form-group" style="margin-top: -10px;">
+                  <label for="select-2" style="color: black;">Mediu</label>
+                  <select class="custom-select" id="select-2" style="text-align: center;" formControlName="denMediu"
+                    (change)="changeEnv()">
+                    <option value="" *ngFor="let med of namesMedii" [value]="med">{{med}}</option>
+                  </select>
+                </div>
+                <div class="form-group" style="margin-top: -10px;">
+                  <label for="select-2" style="color: black;">Aplicatii</label>
+                  <select class="custom-select" id="select-2" style="text-align: center;" formControlName="denApp"
+                    (change)="changeEnv()">
+                    <option *ngFor="let app of namesApp" [value]="app">{{app}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row mt-">
+                <div class="col">
+                  <div class="form-group" style="margin-top: -10px;">
+                    <label class="text-input-2" style="color: black;">Data</label>
+                    <input type="date" class="form-control form-control-undefined" id="text-input-2"
+                      formControlName="data" placeholder="YYYY-MM-DD" (change)="checkDate($event)">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group" style="margin-top: -10px;">
+                    <label for="text-input-2" style="color: black;">Ora</label>
+                    <select class="custom-select" id="text-input-2" style="text-align: center;" formControlName="ora">
+                      <option *ngFor="let hour of newHourList" [value]="hour">{{hour}}
+                      <option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row mt-">
+                <div class="col">
+                  <div class="form-group" style="margin-top: -10px;">
+                    <label for="text-input-2" style="color: black;">Durata</label>
+                    <select class="custom-select" id="text-input-2" style="text-align: center;"
+                      formControlName="durata">
+                      <option *ngFor="let hour of newHourList" [value]="hour">{{hour}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="form-group" style="margin-top: -10px;">
+                    <label for="text-input-2" style="color: black;">Downtime</label>
+                    <select class="custom-select" id="text-input-2" style="text-align: center;"
+                      formControlName="downtime">
+                      <option *ngFor="let hour of newHourList" [value]="hour">{{hour}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-col">
+                <div class="form-group" style="margin-top: -10px;">
+                  <label class="text-input-2" style="color: black;">Contents</label>
+                  <input type="text" class="form-control form-control-undefined" id="text-input-2"
+                    formControlName="content">
+                </div>
+                <div class="form-group" style="margin-top: -10px;">
+                  <label class="text-input-2" style="color: black;">Este Urgenta</label>
+                  <select class="custom-select" id="text-input-2" style="text-align: center;" formControlName="urgenta">
+                    <option value="NU">NU</option>
+                    <option value="DA">DA</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <button type="button" class="btn btn-md btn-discreet-primary cancel"
+                    (click)="onCancel()">Cancel</button>
+                  <button type="button" class="btn btn-md btn-discreet-primary submit" style="margin-left: 235px;"
+                    (click)="onSubmit()">Submit</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="rightDiv" *ngIf="viewRelDetails.length != 0">
+        <table mat-table [dataSource]="dataSource" class="table table-striped">
+          <ng-container matColumnDef="denumiremediu">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold"> Durata
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.duratarelease | date: "HH:mm:ss"}}</td>
+          </ng-container>
+          <ng-container matColumnDef="datarelease">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold"> Data</th>
+            <td mat-cell *matCellDef="let element">{{element.datarelease | date: 'yyyy-MM-dd hh:mm a'}}</td>
+          </ng-container>
+          <ng-container matColumnDef="denumireaplicatie">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold"> Aplicatie
+            </th>
+            <td mat-cell *matCellDef="let element">{{element.denumireaplicatie}}</td>
+          </ng-container>
+    
+    
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns:displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  
+</div>

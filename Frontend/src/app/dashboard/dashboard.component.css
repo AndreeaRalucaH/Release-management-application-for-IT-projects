@@ -1,0 +1,48 @@
+.wfButton{
+    background-color: rgb(238, 218, 205);
+    border: none;
+    font-size: 16px;
+    border-radius: 15px;
+    padding: 6px 10px;
+}
+
+.docButtons{
+    background-color: gainsboro;
+    border: none;
+    font-size: 16px;
+    border-radius: 13px;
+    padding: 6px 12px;
+}
+
+.tableRel{
+    overflow-y: auto;
+    overflow: scroll;
+    overflow-x: auto;
+    height: 50vh;
+    /* width: 150vh; */
+}
+
+.confirmed{
+    background-color: #EDF2FB;
+}
+
+.cancelled{
+    background-color: #f89c9c;
+}
+
+.released{
+    background-color: #d3fac7;
+}
+
+.delivered{
+    background-color: #BEE1E6;
+}
+
+.greenButtons{
+    background-color: rgb(98, 187, 98);
+}
+
+::ng-deep .snack-style-danger{
+    background-color: rgb(232, 75, 75);
+    color: white;
+}

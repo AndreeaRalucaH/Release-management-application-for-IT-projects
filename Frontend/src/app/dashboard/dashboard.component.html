@@ -1,0 +1,145 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div style="margin-left: 490px;">
+                <button type="button" class="btn btn-secondary" (click)="getAllDetailsReleases('UAT')">UAT</button>
+                <button type="button" class="btn btn-secondary" (click)="getAllDetailsReleases('PROD')">PROD</button>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">{{tableName}}</h4>
+                        <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive tableRel" #TABLE>
+                            <table mat-table #table [dataSource]="dataSource" class="table" style="text-align: center;">
+                                <ng-container matColumnDef="denumireaplicatie">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Aplicatie</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                                'released': element.denumirestatus == 'RELEASED'}"
+                                        style="cursor: pointer;">{{element.denumireaplicatie}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="datarelease">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Data</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}" style="cursor: pointer;">
+                                        {{element.datarelease}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="duratarelease">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Durata</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}" style="cursor: pointer;">
+                                        {{element.duratarelease}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="downtime">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Downtime</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}" style="cursor: pointer;">{{element.downtime}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="contentrelease">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold"
+                                        [hidden]="showContentsExcel"> Contents</th>
+                                    <td mat-cell *matCellDef="let element" [hidden]="showContentsExcel">
+                                        {{element.contentrelease}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="bugs">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Bugs</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}" style="cursor: pointer;">{{element.bugs}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="esteurgenta">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Urgenta</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}" style="cursor: pointer;">
+                                    <input type="checkbox" [checked]="element.esteurgenta == 1 ? true : false"></td>
+                                </ng-container>
+                                <ng-container matColumnDef="denumirestatus">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Status</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}" style="cursor: pointer;">
+                                        {{element.denumirestatus}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="imbunatatiri">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Imb</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}">{{element.imbunatatiri}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="idimpulse" *ngIf="isProd">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Id Impulse</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}">
+                                        <button class="btn btn-link"
+                                            (click)="copyChg(element.idimpulse); $event.stopPropagation();"><span
+                                                style="font-size: 15px; color: black;">{{element.idimpulse}}</span></button>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="brv" *ngIf="isProd">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        BRV</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}">
+                                        <button class="docButtons" [ngClass] = "{greenButtons: element.brvpath != ''}"
+                                            (click)="openBrv(element); $event.stopPropagation();"><i
+                                                class="material-icons" style="margin-top: 5px;">attach_file</i></button>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="test" *ngIf="isProd">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Test</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}">
+                                        <button class="docButtons" [ngClass] = "{greenButtons: element.testpath != ''}"
+                                            (click)="openTest(element); $event.stopPropagation();"><i
+                                                class="material-icons" style="margin-top: 5px;">attach_file</i></button>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="workflow">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Workflow</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}">
+                                        <button class="wfButton"
+                                            (click)="openDialogWkf(element.denumirestatus,element.denumiremediu,element.idrelease); $event.stopPropagation();">
+                                            <i class="material-icons" style="margin-top: 5px;">sync_alt</i>
+                                        </button>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="release">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Release</th>
+                                    <td mat-cell *matCellDef="let element" [ngClass]="{'confirmed': element.denumirestatus == 'CONFIRMED', 'delivered': element.denumirestatus == 'DELIVERED', 'cancelled': element.denumirestatus == 'CANCELLED',
+                                    'released': element.denumirestatus == 'RELEASED'}">
+                                        <button [hidden]="element.denumirestatus == 'CONFIRMED' && isAdmin == true && element.relstatus == 0 ? true : 
+                                        element.denumirestatus == 'CONFIRMED' && isAdmin == true && element.relstatus == 1 ? false : element.denumirestatus == 'CONFIRMED' && isAdmin == false && element.relstatus == 2 ? true :
+                                        element.denumirestatus == 'CONFIRMED' && isAdmin == false ? false : true"
+                                            [disabled]="element.denumirestatus == 'CONFIRMED' && isAdmin == true && element.relstatus == 1"
+                                            type="button" class="btn btn-dark"
+                                            (click)="onClickReleaseBtn(element.relBtn,element); $event.stopPropagation();">{{element.relBtn}}</button>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                <tr mat-row (click)="openDetails(row)" *matRowDef="let row; columns:displayedColumns">
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger" style="margin-left: 20px;" (click)="exportToExcel()">EXPORT TO
+                EXCEL</button>
+        </div>
+    </div>
+</div>

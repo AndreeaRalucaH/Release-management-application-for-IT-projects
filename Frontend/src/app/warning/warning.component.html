@@ -1,0 +1,9 @@
+<h3 mat-dialog-title class="alert text-warning bg-warning-alpha-md">Warning</h3>
+<hr class="hr" style="margin-top: -20px;"/>
+<div mat-dialog-content>
+  <h4>Esti sigur ca vrei sa {{action}} release-ul pentru aplicatia {{details.release.denumireaplicatie}}?</h4>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">No Thanks</button>
+  <button mat-button  cdkFocusInitial (click)="onSubmit()">Ok</button>
+</div>

@@ -1,0 +1,25 @@
+.left {
+    float: left;
+    width: 45%;
+}
+
+.right {
+    float: left;
+    width: 50%;
+}
+
+// .row:after {
+//     content: "";
+//     display: table;
+//     clear: both;
+// }
+
+* {
+  box-sizing: border-box;
+}
+
+.tableRel{
+    width: 100%;
+    height: auto;
+    text-align: center;
+}

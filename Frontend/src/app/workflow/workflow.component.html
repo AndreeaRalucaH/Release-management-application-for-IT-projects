@@ -1,0 +1,26 @@
+<h3 mat-dialog-title>Update workflow</h3>
+<hr class="hr" />
+<div mat-dialog-content>
+  <!-- <p>Status curent</p> -->
+  <!-- <mat-form-field>
+    <input matInput [(ngModel)]="data">
+  </mat-form-field> -->
+  <form [formGroup]="form">
+    <div class="form-col">
+        <div class="form-group">
+            <label for="select-2" style="color: black;">Status curent</label>
+            <input type="text" class="form-group" style="text-align: center; width: 200px;" formControlName="currentStatus" id="select-2">
+        </div>
+        <div class=" d-grid">
+            <label for="select-3" style="color: black;">Status nou</label>
+            <select  class="custom-select mb-3" style="text-align: center;" formControlName="newStatus"  id="select-3">
+                <option *ngFor="let status of statusDetails.statusNames" [value]="status">{{status}}</option>
+            </select>
+        </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">No Thanks</button>
+  <button mat-button  cdkFocusInitial (click)="onSubmit()">Ok</button>
+</div>

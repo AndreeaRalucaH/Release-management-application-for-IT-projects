@@ -1,0 +1,274 @@
+import React from 'react';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import {useHistory} from 'react-router-dom';
+import {getProfEmail, getAdminEmail} from '../Calls';
+import {useState} from 'react-dom';
+
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import { useForm } from 'react-hook-form';
+import  { LockFill } from 'react-bootstrap-icons/build/index.js';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      'Chilanka',
+      'cursive',
+    ].join(','),
+  },});
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#006D77"
+    },
+    
+  },
+  link:{
+    color: "black",
+    "&:hover":{
+      color:"green",
+    },
+    "&:visited":{ //daca link-ul este apasat isi schimba culoarea
+      color: "blue",
+    }
+  },
+  lock:{
+    color: "#5B8E7D",
+    fontSize: 30
+    
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  title:{
+    color: "black",
+    fontSize: 35,
+    
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: "#5B8E7D",
+    color: "white",
+    fontSize: 15,
+  },
+  radioButton:{
+    color: "#5B8E7D",
+  },
+}));
+
+function Login() {
+  const classes = useStyles();
+  let history = useHistory();
+  
+
+  const [value, setValue] = React.useState('administrator');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+
+  function verificaEmailProfesori(email){
+    var re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    if(re.test(email)){
+      if(email.indexOf("@csie.ase.ro", email.length - "@csie.ase.ro".length) !== -1){
+        return true;
+      } 
+      else{
+        return false;
+      }
+
+    }
+  }
+
+  function verificaEmailAdmin(email){
+    var re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    if(re.test(email)){
+      if(email.indexOf("@admincsie.ase.ro", email.length - "@admincsie.ase.ro".length) !== -1){
+        return true;
+      } 
+      else{
+        return false;
+      }
+    }
+  }
+
+
+  async function verificaUser(email, parola){
+    if(value === "profesor"){
+      let user = await getProfEmail(email);
+      if(user[0]){
+        console.log(user[0]);
+        user = user[0];
+          if(verificaEmailProfesori(email)){
+            if(user.ParolaProfesor === parola){
+              console.log("OK");
+              history.push('/Home')
+        
+            }else{
+              console.log("Parola incorecta");
+            }
+          }
+          else{
+            alert("Email incorect")
+          }
+            
+      }
+      else{
+        console.log("Selectati administrator!");
+      }
+    }
+    else{
+        if(value === "administrator"){
+          let user = await getAdminEmail(email);
+          if(user[0]){
+            console.log(user[0]);
+            user = user[0];
+              if(verificaEmailAdmin(email)){
+                if(user.AdminParola === parola){
+                  console.log("OK");
+                  history.push('/Home')
+            
+                }else{
+                  console.log("Parola incorecta");
+                }
+              }
+              else{
+                alert("Email incorect")
+              }
+                
+          }
+          else{
+            console.log("Selectati profesori!");
+          }
+        }
+        else{
+          console.log("Selectati profesor!")
+        }
+    }
+      
+   
+  }
+
+  function logIn(e){
+    console.log("Click", e.target);
+    let email = document.getElementById('email').value;
+    let pass = document.getElementById('password').value;
+    verificaUser(email,pass);
+    e.preventDefault() // nu se mai reincarca pagina dupa fiecare submit
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+       <LockFill className={classes.lock}></LockFill>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <form className={classes.form} noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            className={classes.root}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Parola"
+            type="password"
+            id="parolaLogin"
+            autoComplete="current-password"
+            className={classes.root}
+
+          />
+          {/* <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
+          /> */}
+
+          <FormControl component="fieldset"  >
+            {/* <FormLabel component="legend">Gender</FormLabel> */}
+            <RadioGroup value={value} onChange={handleChange} >
+              <FormControlLabel value="administrator" control={<Radio className={classes.radioButton} />} label="Administrator"/>
+              <FormControlLabel value="profesor" control={<Radio className={classes.radioButton}/>} label="Profesor" />
+            </RadioGroup>
+          </FormControl>
+        
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick = {e => logIn(e)}
+          >
+            Login
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Ai uitat parola?
+              </Link>
+            </Grid>
+            <Grid item >
+              <Link href="#" variant="body2" onClick = {(e) => {
+                  e.preventDefault()
+                  if(value === "profesor"){
+                    history.push('/SignUp/Profesor')
+                  }else{
+                    history.push('/SignUp/Administrator')
+                  }
+                 
+                }} >
+                {"Nu ai cont? Inregistreaza-te"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      
+    </Container>
+    </ThemeProvider>
+  );
+}
+
+export default Login;

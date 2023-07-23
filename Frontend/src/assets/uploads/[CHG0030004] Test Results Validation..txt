@@ -1,0 +1,147 @@
+IF(DB_ID ('ActivitatiDB') IS NULL)
+	CREATE DATABASE ActivitatiDB
+GO
+
+USE ActivitatiDB;
+
+
+IF OBJECT_ID('FK_Admin_Profesori') IS NOT NULL
+	ALTER TABLE Profesori DROP CONSTRAINT FK_Admin_Profesori 
+GO
+
+
+IF OBJECT_ID('FK_GestiuneActivitati_Prof') IS NOT NULL
+	ALTER TABLE GestiuneActivitati  DROP CONSTRAINT FK_GestiuneActivitati_Prof
+GO
+
+IF OBJECT_ID('FK_GestiuneActivitati_Activitati') IS NOT NULL
+	ALTER TABLE GestiuneActivitati  DROP CONSTRAINT FK_GestiuneActivitati_Activitati
+GO
+
+IF OBJECT_ID('FK_Activitate_Atasamente') IS NOT NULL
+	ALTER TABLE Atasamente DROP CONSTRAINT FK_Activitate_Atasamente
+GO
+
+IF OBJECT_ID('FK_Profesori_Notite') IS NOT NULL
+	 ALTER TABLE Notite DROP CONSTRAINT FK_Profesori_Notite
+GO
+
+--exec sp_fkeys 'Profesori';
+
+IF OBJECT_ID('Administratori') IS NOT NULL
+	DROP TABLE Administratori
+GO
+
+IF OBJECT_ID('Profesori') IS NOT NULL
+	DROP TABLE Profesori
+GO
+
+
+IF OBJECT_ID('Activitati') IS NOT NULL
+	DROP TABLE Activitati
+GO
+
+IF OBJECT_ID('GestiuneActivitati') IS NOT NULL
+	DROP TABLE GestiuneActivitati
+GO
+
+IF OBJECT_ID('Atasamente') IS NOT NULL
+	DROP TABLE Atasamente
+GO
+
+IF OBJECT_ID('Notite') IS NOT NULL
+	DROP TABLE Notite
+GO
+
+IF OBJECT_ID('Administratori') IS NULL
+	CREATE TABLE Administratori
+	(
+	AdministratorID INT NOT NULL IDENTITY(1,1),
+	AdminNume NVARCHAR(100) NOT NULL,
+	AdminPrenume NVARCHAR(100) NOT NULL,
+	AdminEmail NVARCHAR(100) NOT NULL,
+	AdminParola NVARCHAR(100) NOT NULL,
+	AdminTelefon NVARCHAR(100),
+	CONSTRAINT PK_Administratori PRIMARY KEY (AdministratorID) 
+	)
+GO
+
+IF OBJECT_ID('Profesori') IS NULL
+	CREATE TABLE Profesori
+	(
+	ProfesorID INT NOT NULL IDENTITY(1,1),
+	NumeProfesor NVARCHAR(100) NOT NULL,
+	PrenumeProfesor NVARCHAR(100) NOT NULL,
+	EmailProfesor NVARCHAR(100) NOT NULL,
+	ParolaProfesor NVARCHAR(100) NOT NULL,
+	GradProfesor NVARCHAR(100) NOT NULL,
+	VechimeProfesor INT NOT NULL,
+	TelefonProfesor NVARCHAR(100) NOT NULL,
+	AdministratorID INT NOT NULL,
+	CONSTRAINT PK_Profesori PRIMARY KEY (ProfesorID)
+	)
+GO
+
+IF OBJECT_ID('FK_Admin_Profesori') IS NULL
+	ALTER TABLE Profesori ADD CONSTRAINT FK_Admin_Profesori FOREIGN KEY (AdministratorID) REFERENCES Administratori(AdministratorID) ON DELETE CASCADE
+GO
+
+IF OBJECT_ID('Activitati') IS NULL
+	CREATE TABLE Activitati
+	(
+	ActivitateID INT NOT NULL IDENTITY(1,1),
+	DenumireActivitate NVARCHAR(MAX) NOT NULL,
+	DataInceput DATE NOT NULL,
+	DataFinal DATE NOT NULL,
+	CONSTRAINT PK_Activitati PRIMARY KEY (ActivitateID)
+	)
+GO
+
+IF OBJECT_ID('GestiuneActivitati') IS NULL 
+	CREATE TABLE GestiuneActivitati
+	(
+	ProfesorID INT NOT NULL,
+	ActivitateID INT NOT NULL,
+	VerificareActivitate NVARCHAR(100) NOT NULL,
+	PunctajActivitate INT NOT NULL,
+	CONSTRAINT PK_GestiuneActiv PRIMARY KEY (ProfesorID, ActivitateID)
+	)
+GO
+
+IF OBJECT_ID('FK_GestiuneActivitati_Prof') IS NULL
+	ALTER TABLE GestiuneActivitati ADD CONSTRAINT FK_GestiuneActivitati_Prof FOREIGN KEY (ProfesorID) REFERENCES Profesori(ProfesorID) ON DELETE CASCADE
+GO
+
+IF OBJECT_ID('FK_GestiuneActivitati_Activitati') IS NULL
+	ALTER TABLE GestiuneActivitati ADD CONSTRAINT FK_GestiuneActivitati_Activitati FOREIGN KEY (ActivitateID) REFERENCES Activitati(ActivitateID) ON DELETE CASCADE
+GO
+
+IF OBJECT_ID('Atasamente') IS NULL
+	CREATE TABLE Atasamente
+	(
+	AtasamentID INT NOT NULL IDENTITY (1,1),
+	ReferintaAtasament NVARCHAR(100) NOT NULL,
+	ActivitateID INT NOT NULL,
+	CONSTRAINT PK_Atasamente PRIMARY KEY (AtasamentID)
+	)
+GO
+
+IF OBJECT_ID('FK_Activitate_Atasamente') IS NULL
+	ALTER TABLE Atasamente ADD CONSTRAINT FK_Activitate_Atasamente FOREIGN KEY (ActivitateID) REFERENCES Activitati(ActivitateID) ON DELETE CASCADE
+GO
+
+IF OBJECT_ID('Notite') IS NULL
+	CREATE TABLE Notite 
+	(
+	NotitaID INT NOT NULL IDENTITY(1,1),
+	TextNotita NVARCHAR(MAX) NOT NULL,
+	DataNotita DATE NOT NULL,
+	ProfesorID INT NOT NULL,
+	CONSTRAINT PK_Notite PRIMARY KEY (NotitaID)
+	)
+GO
+
+IF OBJECT_ID('FK_Profesori_Notite') IS NULL
+	 ALTER TABLE Notite ADD CONSTRAINT FK_Profesori_Notite FOREIGN KEY (ProfesorID) REFERENCES Profesori(ProfesorID) ON DELETE CASCADE
+GO
+

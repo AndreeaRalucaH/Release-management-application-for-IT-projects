@@ -1,0 +1,21 @@
+.center{
+    margin-left: 250px;
+    width: 53%;
+}
+
+.divJira{
+    margin-right: -20px;
+    margin-left: -180px;
+    padding-bottom: 20px;
+    width: 850px;
+}
+
+::ng-deep .snack-style-danger{
+    background-color: rgb(232, 75, 75);
+    color: white;
+}
+
+::ng-deep .snack-style-success{
+    background-color: rgb(52, 167, 71);
+    color: white;
+}

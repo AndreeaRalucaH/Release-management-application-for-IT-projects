@@ -1,0 +1,13 @@
+.file-input{
+    display: none;
+}
+
+::ng-deep .snack-style-danger{
+    background-color: rgb(232, 75, 75);
+    color: white;
+}
+
+::ng-deep .snack-style-success{
+    background-color: rgb(52, 167, 71);
+    color: white;
+}

@@ -1,0 +1,29 @@
+export class Detaliirelease {
+    idrelease: number = 0;
+    idstatus: number = 0;
+    idaplicatie: number = 0;
+    idmediu: number = 0;
+    idutilizator: number = 0;
+    iddurata: number = 0;
+    relstatus: number = 0;
+    denumireaplicatie: string = '';
+    imbunatatiri: number = 0;
+    bugs: number = 0;
+    esteurgenta: number = 0;
+    contentrelease: string = '';
+    brvpath: string = '';
+    testpath: string = '';
+    denumirestatus: string = '';
+    denumiremediu: string = '';
+    creator: string = '';
+    idimpulse: string = '';
+    sysidimpulse: string = '';
+    luna: string = '';
+    saptamana: string = '';
+    datarelease: string = '';
+    duratarelease: string = '';
+    downtime: string = '';
+    datastart: string = '';
+    dataend: string = '';
+    relBtn: string = '';
+}

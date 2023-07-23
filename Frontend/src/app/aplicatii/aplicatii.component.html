@@ -1,0 +1,50 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Aplicatii</h4>
+                        <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive tableRel" #TABLE>
+                            <table mat-table #table [dataSource]="dataSource" class="table" style="text-align: center;">
+                                <ng-container matColumnDef="denumire">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Denumire</th>
+                                    <td mat-cell *matCellDef="let element" style="cursor: pointer;">{{element.denumire}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="emails">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Emails</th>
+                                    <td mat-cell *matCellDef="let element" style="cursor: pointer;">{{element.emails}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="ownerproiect">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Owner proiect</th>
+                                    <td mat-cell *matCellDef="let element" style="cursor: pointer;">
+                                        {{element.ownerproiect}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="managerproiect">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center; font-weight: bold">
+                                        Manager proiect</th>
+                                    <td mat-cell *matCellDef="let element" style="cursor: pointer;">
+                                        {{element.managerproiect}}
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns:displayedColumns">
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger" style="margin-left: 20px;" (click)="adaugaApp()">Adauga aplicatie</button>
+        </div>
+    </div>
+</div>

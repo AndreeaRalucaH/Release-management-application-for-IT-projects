@@ -1,0 +1,15 @@
+::ng-deep .snack-style-success{
+    background-color: rgb(37, 170, 24);
+    color: white;
+}
+
+.rightDiv{
+    position: absolute;
+    width: 34%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 200px;
+    margin-left: 820px;
+    margin-top: -15px;
+}
+
